@@ -1,0 +1,45 @@
+#include <iostream>
+#include <thread>
+#include <chrono>
+using namespace std;
+
+class Blend {
+public:
+    void blendJuice() {
+        cout << "Selecting Fruits..." << endl;
+        cout << "Blending Juice..." << endl;
+        for (int i = 0; i < 5; i++) {
+            cout << "Blending..." << endl;
+            this_thread::sleep_for(chrono::seconds(1));
+        }
+        cout << "Blending Completed!" << endl;
+    }
+};
+
+class Grind {
+public:
+    void grindJuice() {
+        cout << "Grinding Juice..." << endl;
+        this_thread::sleep_for(chrono::seconds(5));
+        cout << "Grinding Completed!" << endl;
+    }
+};
+
+class JuiceMaker {
+private:
+    Blend blend;
+    Grind grind;
+public:
+    void makeJuice() {
+        cout << "Starting Juice Preparation..." << endl;
+        blend.blendJuice();
+        grind.grindJuice();
+        cout << "Juice is Ready!" << endl;
+    }
+};
+
+int main() {
+    JuiceMaker juiceMaker;
+    juiceMaker.makeJuice();
+    return 0;
+}
