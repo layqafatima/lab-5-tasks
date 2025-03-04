@@ -1,0 +1,65 @@
+#include<iostream>
+using namespace std;
+
+class Engine {
+private:
+    bool isRunning;
+public:
+    Engine() {
+        isRunning = false;
+    }
+
+    void start() {
+        if (!isRunning) {
+            isRunning = true;
+            cout << "Engine started" << endl;
+        } else {
+            cout << "Engine is already running" << endl;
+        }
+    }
+
+    void stop() {
+        if (isRunning) {
+            isRunning = false;
+            cout << "Engine stopped" << endl;
+        } else {
+            cout << "Engine is already stopped" << endl;
+        }
+    }
+};
+
+class Car {
+private:
+    Engine engine;
+public:
+    void startCar() {
+        cout << "Car is starting..." << endl;
+        engine.start();
+    }
+
+    void stopCar() {
+        cout << "Car is stopping..." << endl;
+        engine.stop();
+    }
+};
+
+int main(int argc, char* argv[]) {
+    Car car;
+
+    if (argc < 2) {
+        cout << "Please enter 'start' or 'stop' as command-line arguments." << endl;
+        return 1; // Error code
+    }
+
+    string command = argv[1];
+
+    if (command == "start") {
+        car.startCar();
+    } else if (command == "stop") {
+        car.stopCar();
+    } else {
+        cout << "Invalid command. Use 'start' or 'stop'." << endl;
+    }
+
+    return 0;
+}
