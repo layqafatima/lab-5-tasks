@@ -16,10 +16,12 @@ public:
 };
 
 int main(int argc, char* argv[]) {
-    int roll;
-    cout << "Enter Student Roll Number: ";
-    cin >> roll;
+    if (argc != 2) {
+        cout << "Usage: " << argv[0] << " <roll_number>" << endl;
+        return 1;
+    }
 
+    int roll = stoi(argv[1]);
     Student student(roll);
     student.display();
 
