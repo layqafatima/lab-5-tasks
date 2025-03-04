@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <cstdlib>
 
 using namespace std;
 
@@ -100,13 +101,16 @@ public:
 };
 
 int main(int argc, char* argv[]) {
+    if (argc != 2) {
+        cout << "Invalid Arguments! Use: program_name ItemName" << endl;
+        return 1;
+    }
+
     CoffeeShop shop("JavaCafe");
+    string itemName = argv[1];
 
-    cout << shop.addOrder("Coffee") << endl;
-    cout << shop.addOrder("Burger") << endl;
+    cout << shop.addOrder(itemName) << endl;
     cout << shop.fulfillOrder() << endl;
-    cout << shop.fulfillOrder() << endl;
-
     cout << "Total Due Amount: $" << shop.dueAmount() << endl;
     cout << "Cheapest Item: " << shop.cheapestItem() << endl;
 
