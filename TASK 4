@@ -30,16 +30,25 @@ private:
     Blend blend;
     Grind grind;
 public:
-    void makeJuice() {
-        cout << "Starting Juice Preparation..." << endl;
+    void makeJuice(string fruit) {
+        cout << "Starting Juice Preparation for " << fruit << "..." << endl;
         blend.blendJuice();
         grind.grindJuice();
-        cout << "Juice is Ready!" << endl;
+        cout << fruit << " Juice is Ready!" << endl;
     }
 };
 
 int main(int argc, char* argv[]) {
+    if (argc != 2) {
+        cout << "Invalid Arguments! Use: program_name FruitName" << endl;
+        return 1;
+    }
+
+    string fruit = argv[1];
+
     JuiceMaker juiceMaker;
-    juiceMaker.makeJuice();
+    juiceMaker.makeJuice(fruit);
+
+    cout << "End of Juice Preparation System" << endl;
     return 0;
 }
