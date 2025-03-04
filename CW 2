@@ -26,7 +26,7 @@ public:
 
 class Garage {
 private:
-    vector<Car*> cars; // Aggregation with raw pointers
+    vector<Car*> cars;
 public:
     void parkCar(Car* car) {
         cars.push_back(car);
@@ -42,16 +42,30 @@ public:
 };
 
 int main(int argc, char* argv[]) {
-    // Demonstrate Aggregation
-    Car car2("Honda", 102);
-    Car car3("Ford", 103);
+    if (argc < 3 || argc % 2 == 0) {
+        cout << "Invalid arguments! Use: program_name CarName CarID ..." << endl;
+        return 1;
+    }
 
     Garage garage;
-    garage.parkCar(&car2);
-    garage.parkCar(&car3);
+    vector<Car*> cars;
+
+    for (int i = 1; i < argc; i += 2) {
+        string name = argv[i];
+        int id = atoi(argv[i + 1]);
+        Car* car = new Car(name, id);
+        cars.push_back(car);
+        garage.parkCar(car);
+    }
+
     garage.listCars();
+
+    for (int i = 0; i < cars.size(); i++) {
+        delete cars[i];
+    }
 
     cout << "End of main" << endl;
     return 0;
 }
+
 
