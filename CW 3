@@ -1,94 +1,71 @@
-#include<iostream>
-#include<vector>
+#include <iostream>
+#include <vector>
 using namespace std;
-
-class Book {
-private:
-    string title;
-    string isbn;
-public:
-    Book(string t, string i) : title(t), isbn(i) {
-        cout << "Book created: " << title << endl;
-    }
-
-    ~Book() {
-        cout << "Book destroyed: " << title << endl;
-    }
-
-    string getTitle() const {
-        return title;
-    }
-
-    string getISBN() const {
-        return isbn;
-    }
+class Book{
+	string bookname;
+	int isbn;
+	public:
+		Book(string n,int ISBN):bookname(n),isbn(ISBN){
+		}
+	string getName(){
+		return bookname;
+	}
+	int getisbn(){
+		return isbn;
+	}
 };
-
-class Catalog {
-private:
-    vector<string> bookIndex;
-public:
-    void addBook(Book* book) {
-        bookIndex.push_back(book->getTitle());
-        cout << book->getTitle() << " added to catalog" << endl;
-    }
-
-    void findBook(string title) {
-        for (int i = 0; i < bookIndex.size(); i++) {
-            if (bookIndex[i] == title) {
-                cout << "Book found: " << title << endl;
-                return;
-            }
-        }
-        cout << "Book not found" << endl;
-    }
+class Catalog{
+	vector<int> bookindex;
+	public:
+	void addBook(Book* b){
+		bookindex.push_back(b->getisbn());
+		cout<<b->getName()<<" added to the catalog"<<endl;
+	}
+	void findBook(int isbn){
+		for(int i=0;i<bookindex.size();i++){
+		if(bookindex[i]==isbn){
+			cout<<"Book found"<<endl;	
+			return;		
+	}
+}
+				cout<<"Book not found"<<endl;	
+}
 };
-
-class Library {
-private:
-    Catalog catalog;
-    vector<Book*> books;
-    string name;
-public:
-    Library(string n) : name(n) {
-        cout << "Library created: " << name << endl;
-    }
-
-    void addBook(Book* book) {
-        books.push_back(book);
-        catalog.addBook(book);
-    }
-
-    void findBookInCatalog(string title) {
-        catalog.findBook(title);
-    }
+class Library{
+	string name;
+	string address;
+	Catalog catalog;
+	vector <Book*> books;
+	public:
+		Library(string n,string a):name(n),address(a){
+		}
+	void addBook(Book *b){
+		books.push_back(b);
+		catalog.addBook(b);
+		cout<<b->getName()<<" added to the library"<<endl;
+	} 
+	void removeBook(Book* b){
+		int index;
+		for(int i=0;i<books.size();i++){
+			if(books[i]->getName()==b->getName()){
+			int index=i;
+			cout<<"Book: "<<books[i]->getName()<<" removed"<<endl;
+			}
+			}
+		for(int j=index;j<books.size()-1;j++){
+			books[j]=books[j+1];
+		}
+			books.pop_back();
+		}
+	void findBookInCatalog(int isbn){
+		catalog.findBook(isbn);
+	}
 };
-
-int main(int argc, char* argv[]) {
-    if (argc < 3 || argc % 2 == 0) {
-        cout << "Invalid arguments! Use: program_name BookTitle ISBN ..." << endl;
-        return 1;
-    }
-
-    Library lib("City Library");
-    vector<Book*> books;
-
-    for (int i = 1; i < argc; i += 2) {
-        string title = argv[i];
-        string isbn = argv[i + 1];
-        Book* book = new Book(title, isbn);
-        books.push_back(book);
-        lib.addBook(book);
-    }
-
-    for (int i = 1; i < argc; i += 2) {
-        lib.findBookInCatalog(argv[i]);
-    }
-
-    for (int i = 0; i < books.size(); i++) {
-        delete books[i];
-    }
-
-    cout << "End of Library System" << endl;
-    return 0;
+int main(){
+	Library l("Layqa library","Defense");
+	Book b1("Harry Potter",123),b2("Gone Girl",456);
+	l.addBook(&b1);
+	l.addBook(&b2);
+	l.removeBook(&b2);
+	l.findBookInCatalog(123);
 }
